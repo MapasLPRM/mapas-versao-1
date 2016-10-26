@@ -5,22 +5,18 @@
 		'message'=>'Obrigado por nos contatar. Entraremos em contato em breve!'
 	);
 
-    if(isset($_POST["submit"])){
+    $name = @trim(stripslashes($_POST['name'])); 
+    $email = @trim(stripslashes($_POST['email'])); 
+    $subject = @trim(stripslashes($_POST['subject'])); 
+    $message = @trim(stripslashes($_POST['message'])); 
 
-        $name = @trim(stripslashes($_POST['name'])); 
-        $email = @trim(stripslashes($_POST['email'])); 
-        $subject = @trim(stripslashes($_POST['subject'])); 
-        $message = @trim(stripslashes($_POST['message'])); 
+    $email_from = $email;
+    $email_to = 'mapasufeslprm@gmail.com';
 
-        $email_from = $email;
-        $email_to = 'lukasfabio@hotmail.com';
+    $body = 'Name: ' . $name . "\n\n" . 'Email: ' . $email . "\n\n" . 'Subject: ' . $subject . "\n\n" . 'Message: ' . $message;
 
-        $body = 'Name: ' . $name . "\n\n" . 'Email: ' . $email . "\n\n" . 'Subject: ' . $subject . "\n\n" . 'Message: ' . $message;
+    $success = @mail($email_to, $subject, $body, 'From: <'.$email_from.'>');
 
-        $success = @mail($email_to, $subject, $body, 'From: <'.$email_from.'>');
-
-        echo json_encode($status);
-
-    }
+    echo json_encode($status);
     die;
 ?>
